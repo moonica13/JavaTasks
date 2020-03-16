@@ -1,0 +1,24 @@
+TASK 1
+	- Se introduc de la tastatura 5 nume care sa inceapa cu una din literele 
+	A, L, M, N, T. 
+	- Case insensitive
+	- fiecare nume este plasat in folderul specific, dupa initiala (ex: Ana -> "numeCuA.txt")
+
+###############################################
+
+TASK 2
+	- Se citesc de la tastatura numere pana se ajunge la un numar deja introdus (ignorat)
+	- Numerele sunt ordonate intr-un fisier, despartite prin virgula, incheind sirul cu punct
+
+###############################################
+
+TASK 3
+
+	- Se citeste dintr-un fisier (pe fiecare rand sunt numere < 3 cifre - fisierul poate avea si un milion de row-uri). 
+        - Fisierul trebuie procesat astfel incat fiecare numar sufera cateva modificari (daca e mai mic de 100 este
+          incrementat cu 1, daca e mai mare de 100 e decrementat cu 1). 
+	- Noile valori trebuie salvate intr-un alt fisier.
+        - A se folosi Producer si Consumer
+
+###############################################
+
