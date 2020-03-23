@@ -32,11 +32,11 @@ public class Producer implements Runnable{
             blockingQueue.put("EOF");  //end of file has been reached
 
         } catch (FileNotFoundException e) {
-
             e.printStackTrace();
+
         } catch (IOException e) {
-
             e.printStackTrace();
+
         } catch(InterruptedException e){
 
         }finally{
@@ -49,7 +49,5 @@ public class Producer implements Runnable{
 
 
     }
-
-
 
 }

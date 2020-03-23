@@ -11,7 +11,7 @@ public class Main {
 
         int MAX_CAPACITY = 1000000;
 
-        BlockingQueue<String> queue = new ArrayBlockingQueue<String>(MAX_CAPACITY);
+        BlockingQueue<String> queue = new ArrayBlockingQueue<>(MAX_CAPACITY);
 
         Producer reader = new Producer(queue);
         Consumer writer = new Consumer(queue);

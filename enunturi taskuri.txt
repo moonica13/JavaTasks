@@ -22,3 +22,10 @@ TASK 3
 
 ###############################################
 
+TASK 4
+
+	- se citesc n nume de fisiere prin parametrul args[] al fct main, 
+	  fiecare fisier continand numere
+	- se face suma elementelor din fiecare fisier, datele fiind introduse
+	  intr-un database
+	- la sfarsit, se afiseaza continutul tabelei 

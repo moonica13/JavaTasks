@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class Consumer implements Runnable {
 
@@ -22,27 +23,38 @@ public class Consumer implements Runnable {
             writer = new PrintWriter(new File("outputFile.txt"));
 
             while (true) {
-                String buffer = blockingQueue.take();
+                String buffer = blockingQueue.poll(10, TimeUnit.SECONDS);
 
-                int parsedBuffer = Integer.parseInt(buffer);
+                if (buffer == null){
+                    break;
+                }
 
                 //Check whether end of file has been reached
                 if (buffer.equals("EOF")) break;
-                else if (Integer.compare(parsedBuffer, comp) == -1)
-                    writer.println(parsedBuffer + 1);
-                else if (Integer.compare(parsedBuffer, comp) == 1)
-                    writer.println(parsedBuffer - 1);
-                else
-                    writer.println(parsedBuffer);
+
+                try {
+                    int parsedBuffer = Integer.parseInt(buffer);
+
+
+                    if (Integer.compare(parsedBuffer, comp) == -1)
+                        writer.println(parsedBuffer + 1);
+                    else if (Integer.compare(parsedBuffer, comp) == 1)
+                        writer.println(parsedBuffer - 1);
+                    else
+                        writer.println(parsedBuffer);
+
+                } catch (NumberFormatException e) {
+                    System.out.println( "\"" +  buffer + "\"" + ": Oopsie, that's not a number, pal!");
+                }
+
             }
 
-
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | InterruptedException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
 
         } finally {
-            writer.close();
+            if (writer != null)
+                 writer.close();
         }
 
     }
