@@ -1,5 +1,7 @@
 package com.company;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.sql.*;
 import java.util.concurrent.CountDownLatch;
@@ -7,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(@NotNull String[] args) {
 
         if (args.length == 0) {
             System.out.println("No arguments!");
@@ -16,15 +18,11 @@ public class Main {
 
         final int length = args.length;
 
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/youngdev2020", "moonica13", "zW.99/")) {
+        try {
 
-            try {
-                conn.createStatement().execute("truncate table task4");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/youngdev2020", "moonica13", "zW.99/");
 
-            CountDownLatch ctdLatch = new CountDownLatch(length);
+            TableCleaning(conn);
 
             for (String arg : args) {
 
@@ -34,6 +32,8 @@ public class Main {
                 thread.start();
 
             }
+
+            CountDownLatch ctdLatch = new CountDownLatch(length);
 
             if (!ctdLatch.await(30, TimeUnit.MILLISECONDS)) {
                 System.out.println("Finished " + ctdLatch.getCount() + " / " + length + ".");
@@ -63,5 +63,14 @@ public class Main {
             e.printStackTrace();
         }
 
+
+    }
+
+    private static void TableCleaning(Connection conn) {
+        try {
+            conn.createStatement().execute("truncate table task4");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

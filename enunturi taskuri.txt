@@ -29,3 +29,10 @@ TASK 4
 	- se face suma elementelor din fiecare fisier, datele fiind introduse
 	  intr-un database
 	- la sfarsit, se afiseaza continutul tabelei 
+
+###############################################
+
+TASK 4b
+	- Implementeaza un DAO in taskul 4
+
+###############################################

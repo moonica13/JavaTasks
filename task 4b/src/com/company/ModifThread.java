@@ -1,22 +1,22 @@
 package com.company;
 
+import dao.DataDAO;
+import model.Data;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 public class ModifThread extends Thread implements Runnable {
 
     protected File file;
-    protected Connection conn;
+    protected DataDAO dataDAO;
     protected String arg;
 
-    public ModifThread(File file, Connection conn, String arg) {
+    public ModifThread(File file, DataDAO dataDAO, String arg) {
         this.file = file;
-        this.conn = conn;
+        this.dataDAO = dataDAO;
         this.arg = arg;
     }
 
@@ -36,21 +36,22 @@ public class ModifThread extends Thread implements Runnable {
                 sum += parsedValue;
             }
 
-            try (Statement statement = conn.createStatement()) {
-                statement.executeQuery("INSERT INTO task4 (suma, fisier) VALUES(sum, arg)");
-            }
+            Data tableData = new Data();
+            tableData.setSum(sum);
+            tableData.setFile(arg);
+            dataDAO.create(tableData);
 
 
-        } catch (IOException | SQLException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
-                try {
-                    if (br != null) {
-                        br.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+            try {
+                if (br != null) {
+                    br.close();
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }
     }
